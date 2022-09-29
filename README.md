@@ -1,1 +1,1 @@
-# Hello
+# Just a little class project.
