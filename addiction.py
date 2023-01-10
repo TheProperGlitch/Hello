@@ -1,5 +1,6 @@
 import random
-points = 10
+uno_cards = ["1","2","3","4","5","6","7","8","9"]
+uno_colors = ["r","g","b","y"]
 def draw(person):
     """A command to add a card to someone's hand in the game of blackjack.
     Person is the hand that recives the card."""
@@ -68,6 +69,30 @@ def blackjack(a1,b1):
                     print(f"The dealer won. :( \n Your cards: {player_cards} \n Dealer cards: {dealer_cards}")
                     return a2 - b2
     return hitting(a1,b1)
+
+def draw_uno():
+    num = uno_cards[random.randint(0,8)]
+    color = uno_colors[random.randint(0,3)]
+    return num+color
+
+def uno(risk):
+    player_hand = []
+    for _ in range(7):
+        player_hand.append(draw_uno())
+    uno_turn(player_hand, 0)
+    return risk
+    
+def uno_turn(hand, stack):
+    if stack == 0:
+        print(f"Your hand:{hand}, the stack:(none)")
+    else:
+        print(f"Your hand:{hand}, the stack:{stack}")
+    card = int(input("Which card would you like to play (position of card in hand): "))
+    if card <= len(hand):
+        return
+
+    
+    
     
 def number_game(a3):
     """A game where you pick a number between 1 and 5. 
@@ -86,10 +111,10 @@ def program(start_point):
     """The thing actualy running the games."""
     points = start_point
     print(f"You have {points} points.")
-    if points == 0:
+    if points < 1:
         print("You lose!")
         return
-    respond = input("Do you want to play (b)lackjack or (g)uessing game: ")  
+    respond = input("Do you want to play (b)lackjack, (u)no or (g)uessing game: ")  
     if respond == "b":
         bet = int(input(f"You have {points} points. How much do you want to bet: ")) 
         if bet > points:
@@ -102,6 +127,11 @@ def program(start_point):
             bet = points 
         points += number_game(bet)
         program(points)
+    elif respond == "u":
+        bet = int(input(f"You have {points} points. How much do you want to bet: "))
+        if bet > points:
+            bet = points 
+        points + uno(bet)
     else:
         print("Goodbye and thanks for playing!")
 program(10)
