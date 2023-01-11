@@ -70,26 +70,39 @@ def blackjack(a1,b1):
                     return a2 - b2
     return hitting(a1,b1)
 
-def draw_uno():
-    num = uno_cards[random.randint(0,8)]
-    color = uno_colors[random.randint(0,3)]
-    return num+color
+# V V V V V V V
+#     UNO
+#VVVVVVVVVVVVVV
 
-def uno(risk):
+
+
+def uno_start(risk):
     player_hand = []
     for _ in range(7):
         player_hand.append(draw_uno())
     uno_turn(player_hand, 0)
     return risk
+
+def draw_uno():
+    num = uno_cards[random.randint(0,8)]
+    color = uno_colors[random.randint(0,3)]
+    return num+color
     
 def uno_turn(hand, stack):
+    
     if stack == 0:
         print(f"Your hand:{hand}, the stack:(none)")
     else:
-        print(f"Your hand:{hand}, the stack:{stack}")
+        print(f"Your hand: {hand}, the stack:{stack}")
     card = int(input("Which card would you like to play (position of card in hand): "))
-    if card <= len(hand):
-        return
+    if card >= len(hand):
+        print("Sorry, but you do not have that many cards. Please try again.")
+        return uno_turn(hand,stack)
+    else:
+        stack = hand[card-1]
+        hand.remove(hand[card-1])
+        return(stack,hand)
+        
 
     
     
@@ -131,7 +144,7 @@ def program(start_point):
         bet = int(input(f"You have {points} points. How much do you want to bet: "))
         if bet > points:
             bet = points 
-        points + uno(bet)
+        points + uno_start(bet)
     else:
         print("Goodbye and thanks for playing!")
 program(10)

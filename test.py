@@ -1,2 +1,2 @@
 list = ["a","b","c"]
-print(len(list))
+print(list[2-1])
