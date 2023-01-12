@@ -100,8 +100,8 @@ def uno_turn(hand, stack):
         return uno_turn(hand,stack)
     else:
         stack = hand[card-1]
-        hand.remove(hand[card-1])
-        return(stack,hand)
+        hand.pop(card-1)
+        uno_turn(stack,hand)
         
 
     
@@ -120,9 +120,8 @@ def number_game(a3):
         print(f"You lose. The correct answer was {answer}, you picked {pick}")
         return a3 * (-1)
 
-def program(start_point):
+def program(points):
     """The thing actualy running the games."""
-    points = start_point
     print(f"You have {points} points.")
     if points < 1:
         print("You lose!")
@@ -144,7 +143,7 @@ def program(start_point):
         bet = int(input(f"You have {points} points. How much do you want to bet: "))
         if bet > points:
             bet = points 
-        points + uno_start(bet)
+        points += uno_start(bet)
     else:
         print("Goodbye and thanks for playing!")
 program(10)
