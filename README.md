@@ -1,1 +1,2 @@
-# Just a little class project.
+# Just a little project.
+A personal repo for messing around
