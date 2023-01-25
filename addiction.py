@@ -80,8 +80,13 @@ def uno_start(risk):
     player_hand = []
     for _ in range(7):
         player_hand.append(draw_uno())
-    uno_turn(player_hand, 0)
-    return risk
+    result = uno_turn(player_hand, 0)
+    print(result)
+    if result == 1:
+        return risk
+    else:
+        risk -= (risk * 2)
+        return risk
 
 def draw_uno():
     num = uno_cards[random.randint(0,8)]
@@ -90,18 +95,22 @@ def draw_uno():
     
 def uno_turn(hand, stack):
     
+    if hand == []:
+        print("You win Uno!")
+        return 1
     if stack == 0:
-        print(f"Your hand:{hand}, the stack:(none)")
+        print(f"Your hand:{hand}, the stack: (none)")
     else:
-        print(f"Your hand: {hand}, the stack:{stack}")
+        print(f"Your hand: {hand}, the stack: {stack}")
     card = int(input("Which card would you like to play (position of card in hand): "))
-    if card >= len(hand):
+    if card-1 > len(hand):
         print("Sorry, but you do not have that many cards. Please try again.")
         return uno_turn(hand,stack)
     else:
-        stack = hand[card-1]
-        hand.pop(card-1)
-        uno_turn(stack,hand)
+        card -= 1
+        stack = hand[card]
+        hand.pop(card)
+        uno_turn(hand,stack)
         
 
     
@@ -144,6 +153,7 @@ def program(points):
         if bet > points:
             bet = points 
         points += uno_start(bet)
+        program(points)
     else:
         print("Goodbye and thanks for playing!")
 program(10)
