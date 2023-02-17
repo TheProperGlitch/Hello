@@ -10,7 +10,7 @@ def draw(person):
     else:
         person.append(10)
 
-def blackjack(a1,b1):
+def blackjack(points1,bet1):
     """ Runs a simplified game of blackjack.
         You are given 2 cards and can see one of the dealer's cards.
         You can chose to hit or stand. If you hit you get another card.
@@ -25,7 +25,7 @@ def blackjack(a1,b1):
     print(f"Dealers cards: {dealer_cards} and Unknown")
     print(f"Your cards: {player_cards}")
 
-    def hitting(a2,b2):
+    def hitting(points2,bet2):
         """A system to run the hitting and standing system in blackjack."""
         total_dealer = 0
         total_player = 0
@@ -37,14 +37,15 @@ def blackjack(a1,b1):
                 total_player = total_player + player_cards[ele]
             if total_player > 21:
                 print(f"Bust! Your cards were: {player_cards}")
-                return (a2 - b2)
+                return (points2 - bet2)
             elif total_player == 21:
                 print(f"Blackjack! You win with a hand of {player_cards}")
-                return a2 + b2
+                return points2 + bet2
             else:
                 print(f"Your cards: {player_cards}")
-                return hitting(a2,b2)
-        else:
+                return hitting(points2,bet2)
+#                VVVVV STANDING VVVVV
+        elif hit_stand == "s":
                 total_player = 0
                 total_dealer = 0
                 for ele in range(0, len(player_cards)):
@@ -58,17 +59,17 @@ def blackjack(a1,b1):
                         total_dealer = total_dealer + dealer_cards[ele]
                 if total_dealer > 21:
                     print(f"The dealer bust. You win! \n Dealer cards: {dealer_cards} \n Your cards: {player_cards}")
-                    return a2 + b2
+                    return points2 + bet2
                 elif total_dealer < total_player:
                     print(f"The dealer lost! \n Your cards: {player_cards} \n Dealer cards: {dealer_cards}")
-                    return a2 + b2
+                    return points2 + bet2
                 elif total_dealer == total_player:
                      print(f"It was a tie! \n Your cards: {player_cards} \n Dealer cards: {dealer_cards}")
-                     return a2
+                     return points2
                 else:
                     print(f"The dealer won. :( \n Your cards: {player_cards} \n Dealer cards: {dealer_cards}")
-                    return a2 - b2
-    return hitting(a1,b1)
+                    return points2 - bet2
+    return hitting(points1,bet1)
 
 # V V V V V V V
 #     UNO
